@@ -1,4 +1,4 @@
-# Homekeeping
+# Homekeeping vNext
 
 A Flutter + Firebase app for managing household tasks between two people.
 
