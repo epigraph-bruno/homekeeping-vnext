@@ -1,165 +1,109 @@
-# Homekeeping vNext (Expo + Supabase)
+# Homekeeping
 
-Cross-platform (iOS/Android) client built with Expo, backed by a local (or hosted) Supabase backend.
+A Flutter + Firebase app for managing household tasks between two people.
 
----
+## Features
 
-## Prerequisites
+- Google Sign-In authentication with user provisioning
+- Daily/Weekly/Monthly task management
+- Workday/Weekend task scheduling
+- Roll-in system for upcoming tasks
+- Grace period handling for overdue tasks
+- Batch completion with undo support
+- Progress metrics and time tracking
+- Offline support
+- Admin XLSX import for task management
 
-* Node.js v18+
-* npm v9+ or v10+
-* Docker Desktop (running)
-* Supabase CLI (`npm install -g supabase`)
-* Expo Go app on your phone (App Store / Play Store)
-* Phone and development machine must be on the **same Wi-Fi network**
+## Setup
 
----
+### Prerequisites
+
+- Flutter SDK (latest stable)
+- Firebase CLI
+- Node.js (for Firebase Functions)
+- iOS/Android development setup
+
+### Local Development
+
+1. Clone the repository:
+```bash
+git clone https://github.com/epigraph-bruno/homekeeping-vnext.git
+cd homekeeping-vnext
+```
+
+2. Install dependencies:
+```bash
+# Flutter dependencies
+flutter pub get
+
+# Firebase Functions dependencies
+cd functions
+npm install
+cd ..
+```
+
+3. Add Firebase configuration:
+- Place `google-services.json` in `android/app/`
+- Place `GoogleService-Info.plist` in `ios/Runner/`
+- Or use provided files in `firebase-config/`
+
+4. Run the app:
+```bash
+flutter run
+```
+
+### Firebase Setup
+
+1. Create a new Firebase project
+2. Enable required services:
+   - Authentication (Google Sign-In)
+   - Firestore
+   - Cloud Functions
+   - Cloud Storage
+
+3. Deploy Firebase configuration:
+```bash
+cd functions
+npm run deploy
+```
 
 ## Project Structure
 
+- `lib/` - Flutter application code
+  - `models/` - Data models
+  - `services/` - Business logic
+  - `providers/` - State management
+  - `screens/` - UI screens
+  - `widgets/` - Reusable widgets
+  - `utils/` - Helper functions
+
+- `functions/` - Firebase Cloud Functions
+  - `src/` - TypeScript source code
+  - `lib/` - Compiled JavaScript
+
+- `test/` - Test files
+  - `services/` - Service tests
+  - `screens/` - Widget tests
+  - `utils/` - Test utilities
+
+## Testing
+
+Run tests:
 ```bash
-homekeeping-vnext/
-  app/
-    App.js
-    lib/
-      supabase.js
-    .env.local
-    app.json
-    index.js
-  supabase/
-    migrations/
-      0001_init.sql
+flutter test
 ```
 
----
+## Admin Tasks
 
-## 1) Start Local Supabase
+Task management is handled through XLSX files uploaded to Firebase Storage:
 
-From the repo root (the folder containing `supabase/`):
+1. Update the template XLSX file
+2. Upload to Firebase Storage `/imports/`
+3. System will automatically:
+   - Validate the file
+   - Update tasks/users/settings
+   - Regenerate agendas
 
-```bash
-npx supabase start
-```
+## License
 
-This prints:
-
-* API URL
-* ANON key
-* Studio URL
-* Mailpit URL
-
-Keep these handy. They are required for environment configuration.
-
----
-
-## 2) Apply Migrations
-
-```bash
-npx supabase migration up
-```
-
-Confirm with:
-
-```bash
-npx supabase migration list
-```
-
----
-
-## 3) Configure Environment Variables
-
-Inside `app/.env.local`:
-
-```bash
-EXPO_PUBLIC_SUPABASE_URL=http://YOUR_LAN_IP:54321
-EXPO_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY
-```
-
-* Replace `YOUR_LAN_IP` with your computer’s LAN IP (e.g. `192.168.1.216`).
-* Replace `YOUR_ANON_KEY` with the `ANON_KEY` shown in `supabase status`.
-
-⚠️ Do **not** use `127.0.0.1` or `localhost` when testing on a physical phone.
-
----
-
-## 4) Install Dependencies
-
-```bash
-cd app
-npm install
-```
-
----
-
-## 5) Run the Client
-
-```bash
-npx expo start
-```
-
-* A QR code will appear in your terminal.
-* Open **Expo Go** on your phone and scan the QR.
-* The app should load and automatically ping Supabase.
-
-If you see `Network request failed`, verify:
-
-* Phone and laptop are on the same Wi-Fi
-* `EXPO_PUBLIC_SUPABASE_URL` points to your LAN IP
-* Supabase containers are running (`npx supabase status`)
-
----
-
-## 6) Useful Commands
-
-* **Check Supabase services:**
-
-  ```bash
-  npx supabase status
-  ```
-
-* **Stop Supabase:**
-
-  ```bash
-  npx supabase stop
-  ```
-
-* **Reset DB (destroys data):**
-
-  ```bash
-  npx supabase db reset
-  ```
-
-* **View DB UI (Studio):**
-  Open the Studio URL shown by `supabase start` (usually [http://127.0.0.1:54323](http://127.0.0.1:54323))
-
----
-
-## 7) Push to GitHub
-
-```bash
-git init
-git branch -m main
-git add .
-git commit -m "chore: bootstrap expo + supabase local"
-
-# Option A: With GitHub CLI
-gh repo create homekeeping-vnext --source=. --public --push
-
-# Option B: Manual
-git remote add origin https://github.com/<you>/homekeeping-vnext.git
-git push -u origin main
-```
-
-Make sure `.env` and `.env.local` files are ignored (`.gitignore` already includes them).
-
----
-
-## Next Steps
-
-With the repo pushed and environment configured:
-
-* Open the project in **Cursor** (or VS Code)
-* Drop in the detailed app spec
-* Iterate feature by feature with AI agents
-
-You now have a working baseline: **Expo + Supabase + Physical Device connectivity**. 🚀
+Private repository - All rights reserved

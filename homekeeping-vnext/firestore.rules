@@ -1,0 +1,71 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isProvisioned() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+    
+    function isAdmin() {
+      return isProvisioned() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      // Only Cloud Functions can write to users (during XLSX import)
+      allow write: if false;
+    }
+    
+    // Groups collection
+    match /groups/{groupId} {
+      allow read: if isProvisioned();
+      // Only Cloud Functions can write to groups (during XLSX import)
+      allow write: if false;
+    }
+    
+    // Tasks collection
+    match /tasks/{taskId} {
+      allow read: if isProvisioned();
+      // Only Cloud Functions can write to tasks (during XLSX import)
+      allow write: if false;
+    }
+    
+    // Settings collection
+    match /settings/{settingId} {
+      allow read: if isProvisioned();
+      // Only Cloud Functions can write to settings (during XLSX import)
+      allow write: if false;
+    }
+    
+    // Agendas collection
+    match /agendas/{periodKey}/items/{itemId} {
+      allow read: if isProvisioned();
+      // Only Cloud Functions can write to agendas (during regeneration)
+      allow write: if false;
+    }
+    
+    // Events collection
+    match /events/{yyyy_mm}/entries/{eventId} {
+      allow read: if isProvisioned();
+      // Allow users to create events (taps) but not modify existing ones
+      allow create: if isProvisioned() &&
+        request.resource.data.userCode == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.code;
+      allow update, delete: if false;
+    }
+    
+    // Import logs collection
+    match /importLogs/{logId} {
+      allow read: if isAdmin();
+      // Only Cloud Functions can write to import logs
+      allow write: if false;
+    }
+  }
+}

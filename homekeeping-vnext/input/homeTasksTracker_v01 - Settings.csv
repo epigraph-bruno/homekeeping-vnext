@@ -1,0 +1,16 @@
+Section,Key,Value,Notes
+AgendaRules,WeekStart,Monday,Week start day for weekly windows and grace.
+AgendaRules,Roll_Week_to_Today_Days,2,How many days before week end to roll weekly into Today.
+AgendaRules,Roll_Month_to_Week_Days,7,How many days before month end to roll monthly into current Week.
+AgendaRules,Disallow_Cadences_Beyond_Month,TRUE,Eliminates Quarter/Year; use Month + Interval.
+Grace,Daily_Grace_Days,7,Days after due date to still allow completion.
+Grace,Weekly_Grace_Mode,EndOfFollowingWeek,Catch up allowed through end of next week.
+Grace,Monthly_Grace_Mode,EndOfFollowingMonth,Catch up allowed until the end of the next month.
+Metrics,Enable_Simple_Weekly_Pulse,TRUE,Use simplified metrics tabs.
+Metrics,Include_Individual_In_Global,FALSE,Global charts exclude per-person tasks; use separate individual chart.
+Metrics,HoursPerTap_Default,0.5,Fallback avg duration hours if task duration missing.
+Metrics,DoneSheetName,Done_Normalized,Set by buildDoneFromEvents
+AgendaRules,Backfill_Lookback_Days,90,Historical window for backlog backfill
+Grace,Daily,7,Everyday task grace (days)
+Grace,Weekly,7,Weekly task grace (days)
+Grace,Monthly,30,Monthly task grace (days)

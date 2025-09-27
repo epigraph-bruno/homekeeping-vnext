@@ -1,21 +1,65 @@
-# Node + Expo
-node_modules/
-.expo/
-.expo-shared/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+ios/Pods/
+*.iml
+*.lock
+*.log
 
-# Mac/OS junk
+# Firebase
+.firebase/
+firebase-debug.log
+ui-debug.log
+.runtimeconfig.json
+**/google-services.json
+**/GoogleService-Info.plist
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
 .DS_Store
 
-# Env files
+# Node.js (for Firebase Functions)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+functions/lib/
+functions/node_modules/
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Environment
 .env
-.env.local
+.env.*
+*.env.json
 
-# Supabase generated state
-.supabase
+# Build outputs
+*.apk
+*.ipa
+*.app.dSYM.zip
+*.app
+*.cer
+*.mobileprovision
+*.provisionprofile
 
-# Build artifacts
-dist/
-build/
+# Other
+*.class
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/

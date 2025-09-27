@@ -1,0 +1,56 @@
+Task ID,Name,Repeat Unit,Repeat Interval,Times Per Period,requireBoth,AssignedTo,Active,Notes / Instructions,Avg Task Duration (min),Daily_Mode,Interval,Group ID
+T001,Dishes,Day,1,1,FALSE,,TRUE,Do The Kitchen Dishes,15,,1,G03
+T002,Cook,Week,1,2,FALSE,,TRUE,Basic food coking,60,,1,G09
+T003,Harrison cloths,Week,1,1,FALSE,,TRUE,"wash, dry, store his cloths",60,,1,G04
+T004,Commun cloths,Week,1,1,FALSE,,TRUE,"Wash, dry, store our commun cloths",20,,1,G04
+T005,Trash,Week,1,1,FALSE,,TRUE,"Collect (cats poop, hg dupers, bathrooms trash, kitchen trash) 
+Recycle
+Add clean bags
+Place and collect big trasbins",30,,1,G03
+T045,AM Clear Table,Day,1,1,FALSE,,TRUE,Self Descriptive,10,,1,G03
+T047,PM Clear Table,Day,1,1,FALSE,,TRUE,Self Descriptive,10,,1,G03
+T046,AM Lock doors and Off Lights,Day,1,1,FALSE,,TRUE,Self Descriptive,5,,1,G12
+T048,PM Lock doors and Off Lights,Day,1,1,FALSE,,TRUE,Self Descriptive,5,,1,G12
+T006,Clean Kitchen,Week,1,1,FALSE,,TRUE,"Just a basic floor, table, and couter top clean",40,,1,G03
+T007,Clean Living room,Week,1,1,FALSE,,TRUE,"Just a basic floor, table, sofa, organize cluer and toys",30,,1,G03
+T008,Clean Harrison room,Week,1,1,FALSE,,TRUE,"Just a basic floor, organize cluer and toys",30,,1,G03
+T009,Clean Sun Room,Week,1,1,FALSE,,TRUE,"Just a basic floor, organize cluer and toys",20,,1,G03
+T010,Change Harrisons sheets,Week,1,1,FALSE,,TRUE,Self Descriptive,10,,1,G04
+T011,Change master bedroom sheets,Month,1,1,FALSE,,TRUE,Self Descriptive,15,,1,G04
+T012,Change guest bedroom sheets,Month,1,1,FALSE,,TRUE,Self Descriptive,15,,1,G04
+T013,AM Feed and give water to cats,Day,1,1,FALSE,,TRUE,Give cats food and water,5,,1,G10
+T014,Order groceries,Week,1,2,FALSE,,TRUE,Get the basic needed groceries for the week,20,,1,G05
+T015,Pickup groceries,Week,1,2,FALSE,,TRUE,Go to the store or stoke parkinglot and pick the groceries as well as organize them in to their places,20,,1,G05
+T016,AM Drop Harrison at daycare,Day,1,1,FALSE,,TRUE,Self Descriptive,15,Workdays,1,G06
+T017,PM Pick Harrison from daycare,Day,1,1,FALSE,,TRUE,Self Descriptive,15,Workdays,1,G06
+T018,AM Give harrrison breakfast,Day,1,1,FALSE,,TRUE,Self Descriptive,15,,1,G09
+T019,Give Harrison lunch,Day,1,1,FALSE,,TRUE,Self Descriptive,15,Weekends,1,G09
+T020,PM Give Harrison dinner,Day,1,1,FALSE,,TRUE,Self Descriptive,15,,1,G09
+T021,Give Harrison a bath,Week,1,2,FALSE,,TRUE,"Give him bath, get the changing station ready, abnd then clean the changing station",50,,1,G06
+T022,PM Put Harrison to sleep,Day,1,1,FALSE,,TRUE,"Clean and change him, whatch his fav shows wash his teeth read a story and put him to bed",60,,1,G06
+T023,Transfere money,Week,2,1,FALSE,,TRUE,Self Descriptive,5,,2,G07
+T024,Pay monthly bills,Month,1,1,TRUE,,TRUE,Self Descriptive,10,,1,G07
+T025,Get rob cleaning,Week,1,2,TRUE,,TRUE,Clean his trash resorvoir and ensure he can run,5,,1,G03
+T026,Mow grass,Month,1,1,FALSE,,TRUE,Self Descriptive,80,,1,G01
+T027,Clean yard from debris,Month,1,1,FALSE,,TRUE,Self Descriptive,20,,1,G01
+T028,Gutter and roof Maintenance,Month,1,1,FALSE,,TRUE,Gutter and roof Maintenance,120,,1,G12
+T029,Deep clean master bathroom,Month,3,1,FALSE,,TRUE,Self Descriptive,60,,3,G03
+T030,Deep clean and organize master bedroom,Month,3,1,FALSE,,TRUE,Self Descriptive,60,,3,G03
+T031,Deep clean guest bathroom,Month,3,1,FALSE,,TRUE,Self Descriptive,60,,3,G03
+T032,Deep clean and organize guest bedroom,Month,3,1,FALSE,,TRUE,Self Descriptive,60,,3,G03
+T033,Deep clean and organize Harrisons room,Month,3,1,FALSE,,TRUE,Self Descriptive,60,,3,G06
+T034,Deep clean refrigerator,Quarter,2,1,FALSE,,TRUE,Self Descriptive,40,,2,G03
+T035,Deep clean Kitchen,Month,3,1,FALSE,,TRUE,Self Descriptive,60,,3,G03
+T036,Deep clean Living Room,Month,3,1,FALSE,,TRUE,Self Descriptive,40,,3,G03
+T037,Deep clean SunRoom,Month,3,1,FALSE,,TRUE,Self Descriptive,40,,3,G03
+T038,Clean and organize basmanet,Quarter,2,1,FALSE,,TRUE,Self Descriptive,30,,2,G03
+T039,AM Gigi Meds,Day,1,1,FALSE,,TRUE,Self Descriptive,5,,1,G10
+T040,PM Gigi Meds,Day,1,1,FALSE,,TRUE,Self Descriptive,5,,1,G10
+T041,Clean Cat Litter,Week,1,1,FALSE,,TRUE,Self Descriptive,20,,1,G10
+T042,KG to take her meds,Day,1,1,FALSE,KG,TRUE,Just for Kaitlyn,5,,1,G14
+T043,BG to take his meds,Day,1,1,FALSE,BG,TRUE,Just for Bruno,5,,1,G14
+T044,Prepare HG Bag for the week,Week,1,1,FALSE,,TRUE,Setup harrisons back fro the week,20,,1,G06
+T049,PM Feed and give water to cats,Day,1,1,FALSE,,TRUE,Give cats food and water,5,,1,G10
+T050,BG Pickleball,Week,1,1,FALSE,BG,TRUE,Just for Bruno,70,,1,G14
+T051,BG Gym,Week,1,1,FALSE,BG,TRUE,Just for Bruno,70,,1,G14
+T052,AM Close room doors before leaving ,Day,1,1,FALSE,,TRUE,Self Descriptive,10,,1,G03
