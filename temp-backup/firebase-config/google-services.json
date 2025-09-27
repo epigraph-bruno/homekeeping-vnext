@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "919144048603",
+    "project_id": "homekeeping-d424c",
+    "storage_bucket": "homekeeping-d424c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919144048603:android:cd367ee50a7b51ec3669fe",
+        "android_client_info": {
+          "package_name": "com.homekeeping.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919144048603-jrreiajdmadna0nvjm8th1ae085cr4pg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5e4pAsfmYiIzeuCzdJIaV1qAoBu-6OUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919144048603-jrreiajdmadna0nvjm8th1ae085cr4pg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "919144048603-283mbdofatdfo1jo526hlstgosgrloj2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.homekeeping.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
