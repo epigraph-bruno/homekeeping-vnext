@@ -8,7 +8,7 @@ admin.initializeApp();
 
 const db = admin.firestore();
 const storage = admin.storage();
-const CHICAGO_TZ = 'America/Chicago';
+// const CHICAGO_TZ = 'America/Chicago';
 
 export const onImportXlsx = functions.storage.object().onFinalize(async (object) => {
   // Only process files in the imports directory
@@ -47,10 +47,10 @@ export const onImportXlsx = functions.storage.object().onFinalize(async (object)
       for (const user of users) {
         try {
           const userData: User = {
-            email: user['Email'],
-            displayName: user['DisplayName'],
-            code: user['Code (BG/KG)'],
-            isAdmin: Boolean(user['IsAdmin']),
+            email: (user as any)['Email'],
+            displayName: (user as any)['DisplayName'],
+            code: (user as any)['Code (BG/KG)'],
+            isAdmin: Boolean((user as any)['IsAdmin']),
           };
           
           if (!userData.email || !userData.code) {
@@ -81,8 +81,8 @@ export const onImportXlsx = functions.storage.object().onFinalize(async (object)
       for (const group of groups) {
         try {
           const groupData: Group = {
-            groupId: group['Group ID'],
-            name: group['Group Name'],
+            groupId: (group as any)['Group ID'],
+            name: (group as any)['Group Name'],
           };
 
           if (!groupData.groupId || !groupData.name) {
@@ -111,12 +111,28 @@ export const onImportXlsx = functions.storage.object().onFinalize(async (object)
       const tasks = XLSX.utils.sheet_to_json(tasksSheet);
       for (const task of tasks) {
         try {
-          const { isValid, errors, warnings } = validateTask(task);
+          // Map column names to property names
+          const mappedTask = {
+            taskId: (task as any)['Task ID'],
+            name: (task as any)['Name'],
+            repeatUnit: (task as any)['Repeat Unit'],
+            repeatInterval: (task as any)['Repeat Interval'],
+            timesPerPeriod: (task as any)['Times Per Period'],
+            requireBoth: (task as any)['requireBoth'],
+            assignedTo: (task as any)['AssignedTo'],
+            active: (task as any)['Active'],
+            notes: (task as any)['Notes / Instructions'],
+            avgTaskDuration: (task as any)['Avg Task Duration (min)'],
+            dailyMode: (task as any)['Daily_Mode'],
+            groupId: (task as any)['Group ID'],
+          };
+
+          const { isValid, errors, warnings } = validateTask(mappedTask);
           
           if (!isValid) {
             importLog.errors.push({
               type: 'task',
-              id: task['Task ID'],
+              id: (task as any)['Task ID'],
               message: errors.join(', '),
             });
             continue;
@@ -125,19 +141,19 @@ export const onImportXlsx = functions.storage.object().onFinalize(async (object)
           warnings.forEach(warning => {
             importLog.warnings.push({
               type: 'task',
-              id: task['Task ID'],
+              id: (task as any)['Task ID'],
               message: warning,
             });
           });
 
-          const taskData: Task = normalizeTask(task);
+          const taskData: Task = normalizeTask(mappedTask);
           const taskRef = db.collection('tasks').doc(taskData.taskId);
           batch.set(taskRef, taskData, { merge: true });
           importLog.counts.tasks++;
         } catch (error) {
           importLog.errors.push({
             type: 'task',
-            id: task['Task ID'],
+            id: (task as any)['Task ID'],
             message: `Error processing task: ${error}`,
           });
         }
@@ -151,18 +167,37 @@ export const onImportXlsx = functions.storage.object().onFinalize(async (object)
         const settingsRows = XLSX.utils.sheet_to_json(settingsSheet);
         const settingsData: any = {};
         
-        // Convert rows to nested object
+        // Convert rows to nested object with proper key mapping
         for (const row of settingsRows) {
-          const section = row['Section'];
-          const key = row['Key'];
-          const value = row['Value'];
+          const section = (row as any)['Section'];
+          const key = (row as any)['Key'];
+          const value = (row as any)['Value'];
           
           if (!section || !key) continue;
           
           if (!settingsData[section]) {
             settingsData[section] = {};
           }
-          settingsData[section][key] = value;
+          
+          // Map CSV keys to expected property names
+          let mappedKey = key;
+          if (section === 'AgendaRules') {
+            if (key === 'Roll_Week_to_Today_Days') mappedKey = 'rollWeekToTodayDays';
+            else if (key === 'Roll_Month_to_Week_Days') mappedKey = 'rollMonthToWeekDays';
+            else if (key === 'WeekStart') mappedKey = 'weekStart';
+            else if (key === 'Disallow_Cadences_Beyond_Month') mappedKey = 'disallowCadencesBeyondMonth';
+            else if (key === 'Backfill_Lookback_Days') mappedKey = 'backfillLookbackDays';
+          } else if (section === 'Grace') {
+            if (key === 'Daily' || key === 'Daily_Grace_Days') mappedKey = 'daily';
+            else if (key === 'Weekly' || key === 'Weekly_Grace_Days') mappedKey = 'weekly';
+            else if (key === 'Monthly' || key === 'Monthly_Grace_Days') mappedKey = 'monthly';
+          } else if (section === 'Metrics') {
+            if (key === 'Enable_Simple_Weekly_Pulse') mappedKey = 'enableSimpleWeeklyPulse';
+            else if (key === 'Include_Individual_In_Global') mappedKey = 'includeIndividualInGlobal';
+            else if (key === 'HoursPerTap_Default') mappedKey = 'hoursPerTapDefault';
+          }
+          
+          settingsData[section][mappedKey] = value;
         }
 
         const { isValid, errors, warnings } = validateSettings(settingsData);

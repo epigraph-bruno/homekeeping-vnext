@@ -26,7 +26,7 @@ export function calculateTimeMetrics(
 ): TimeMetrics {
   // Initialize accumulators
   const groupHours = new Map<string, number>();
-  const personHours = new Map<string, string>();
+  const personHours = new Map<string, number>();
   let ungroupedHours = 0;
   let totalHours = 0;
 
@@ -46,7 +46,7 @@ export function calculateTimeMetrics(
 
     // Add to person's total
     const personTotal = personHours.get(event.userCode) || 0;
-    personHours.set(event.userCode, personTotal + hours);
+    personHours.set(event.userCode, Number(personTotal) + Number(hours));
 
     // Add to group total or ungrouped
     if (task.groupId) {
@@ -64,14 +64,14 @@ export function calculateTimeMetrics(
       groupName: groupNames.get(groupId) || 'Unknown Group',
       hours,
     }))
-    .sort((a, b) => b.hours - a.hours); // Sort by hours descending
+    .sort((a, b) => Number(b.hours) - Number(a.hours)); // Sort by hours descending
 
   const byPerson: TimeByPerson[] = Array.from(personHours.entries())
     .map(([userCode, hours]) => ({
       userCode,
       hours,
     }))
-    .sort((a, b) => b.hours - a.hours); // Sort by hours descending
+    .sort((a, b) => Number(b.hours) - Number(a.hours)); // Sort by hours descending
 
   return {
     byGroup,

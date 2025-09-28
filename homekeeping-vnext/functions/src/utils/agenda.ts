@@ -7,7 +7,7 @@ import {
   isWorkday,
   isWeekend,
   getDaysUntilEndOfPeriod,
-  formatPeriodKey,
+  // formatPeriodKey,
 } from './date';
 
 interface AgendaItem {
