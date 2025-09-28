@@ -5,9 +5,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'Web platform is not supported in this version.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -37,5 +35,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'homekeeping-d424c.appspot.com',
     iosClientId: 'YOUR-IOS-CLIENT-ID',
     iosBundleId: 'com.homekeeping.app',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCbyuwly0yTspLL4zEUmx9ZgCuFDaT4t4M',
+    appId: '1:919144048603:web:5f644adf04a71cdd3669fe',
+    messagingSenderId: '919144048603',
+    projectId: 'homekeeping-d424c',
+    authDomain: 'homekeeping-d424c.firebaseapp.com',
+    storageBucket: 'homekeeping-d424c.firebasestorage.app',
+    measurementId: 'G-XQ823DFRN2',
   );
 }

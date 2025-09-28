@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart'; // Import for debugPrint
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:homekeeping/models/user_model.dart';
 
@@ -30,29 +31,59 @@ class AuthService {
       uid: user.uid,
       email: user.email ?? data['email'] as String,
       displayName: user.displayName ?? data['displayName'] as String?,
-      userCode: data['code'] as String,
+      userCode: data['userCode'] as String,
       isAdmin: data['isAdmin'] as bool? ?? false,
     );
   }
 
   Future<UserModel?> signInWithGoogle() async {
     try {
+      print('🔍 Step 1: Starting Google Sign-In...');
       final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return null;
+      if (googleUser == null) {
+        print('🔍 Step 1 FAILED: Google Sign-In cancelled');
+        return null;
+      }
+      print('🔍 Step 1 SUCCESS: Got Google user: ${googleUser.email}');
 
+      print('🔍 Step 2: Getting Google authentication...');
       final googleAuth = await googleUser.authentication;
+      print('🔍 Step 2 SUCCESS: Got tokens - Access: ${googleAuth.accessToken != null}, ID: ${googleAuth.idToken != null}');
+      
+      print('🔍 Step 3: Creating Firebase credential...');
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+      print('🔍 Step 3 SUCCESS: Created Firebase credential');
 
+      print('🔍 Step 4: Signing in to Firebase...');
       final userCredential = await _auth.signInWithCredential(credential);
+      print('🔍 Step 4 SUCCESS: Firebase sign-in completed');
+      
       final user = userCredential.user;
-      if (user == null) return null;
+      if (user == null) {
+        print('🔍 Step 4 FAILED: No user returned from Firebase');
+        return null;
+      }
+      print('🔍 Step 4 SUCCESS: Got Firebase user: ${user.uid}');
 
+      // Debug logging - multiple methods to ensure visibility
+      print('🔍 DEBUG: User UID = ${user.uid}');
+      print('🔍 DEBUG: User Email = ${user.email}');
+      print('🔍 DEBUG: Looking for document at: users/${user.uid}');
+      debugPrint('🔍 DEBUG: User UID = ${user.uid}');
+      debugPrint('🔍 DEBUG: User Email = ${user.email}');
+      
+      // Show alert with UID for debugging - will definitely be visible
+      // ignore: avoid_print
+      print('🚨 ALERT: Your UID is: ${user.uid}');
 
       final doc = await _firestore.collection('users').doc(user.uid).get();
+      print('🔍 DEBUG: Document exists = ${doc.exists}');
+      
       if (!doc.exists) {
+        print('🔍 DEBUG: No document found for UID ${user.uid}');
         await signOut();
         return null;
       }
@@ -62,10 +93,12 @@ class AuthService {
         uid: user.uid,
         email: user.email ?? data['email'] as String,
         displayName: user.displayName ?? data['displayName'] as String?,
-        userCode: data['code'] as String,
+        userCode: data['userCode'] as String,
         isAdmin: data['isAdmin'] as bool? ?? false,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('🚨 ERROR in signInWithGoogle: $e');
+      print('🚨 Stack trace: $stackTrace');
       await signOut();
       return null;
     }

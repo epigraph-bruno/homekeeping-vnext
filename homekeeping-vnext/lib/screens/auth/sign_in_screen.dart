@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,9 +18,20 @@ class SignInScreen extends ConsumerWidget {
               'Welcome to Homekeeping',
               style: TextStyle(fontSize: 24),
             ),
+            const Text(
+              'Version: DEBUG-v2.2 🎯',
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
             const SizedBox(height: 32),
             ElevatedButton.icon(
-              onPressed: () => _handleSignIn(context, ref),
+              onPressed: () {
+                // MULTIPLE debug methods to ensure visibility
+                print('🚀🚀🚀 BUTTON DEFINITELY CLICKED! 🚀🚀🚀');
+                debugPrint('🚀🚀🚀 BUTTON DEFINITELY CLICKED! 🚀🚀🚀');
+                // ignore: avoid_print
+                print('🚨🚨🚨 FLUTTER BUTTON HANDLER CALLED! 🚨🚨🚨');
+                _handleSignIn(context, ref);
+              },
               icon: const Icon(Icons.login),
               label: const Text('Sign in with Google'),
             ),
@@ -30,8 +42,11 @@ class SignInScreen extends ConsumerWidget {
   }
 
   Future<void> _handleSignIn(BuildContext context, WidgetRef ref) async {
+    print('🚀 BUTTON CLICKED: Starting sign-in process...');
     try {
+      print('🚀 CALLING: authServiceProvider.signInWithGoogle()');
       final user = await ref.read(authServiceProvider).signInWithGoogle();
+      print('🚀 RESULT: signInWithGoogle returned: ${user != null ? 'USER' : 'NULL'}');
       if (user == null) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
